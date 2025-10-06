@@ -1,4 +1,6 @@
-import Link from "next/link"
+"use client";
+
+import {Link} from "@/i18n/routing"
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import {
@@ -16,22 +18,55 @@ import {
   FieldSeparator,
 } from "@/components/ui/field"
 import { Input } from "@/components/ui/input"
+import {z} from "zod"
+import {useZodErrorMap} from "@/components/zod-intl"
+import {useState} from "react"
+
+import {useTranslations} from "next-intl"
 
 export function LoginForm({
   className,
   ...props
 }: React.ComponentProps<"div">) {
+  const t = useTranslations("login")
+  const tc = useTranslations("common")
+  const errorMap = useZodErrorMap()
+  const schema = z.object({
+    email: z.string().email(),
+    password: z.string().min(8),
+  })
+  const [errors, setErrors] = useState<{email?: string; password?: string}>({})
+  function onSubmit(e: React.FormEvent<HTMLFormElement>) {
+    e.preventDefault()
+    const formData = new FormData(e.currentTarget)
+    const data = {
+      email: String(formData.get("email") || ""),
+      password: String(formData.get("password") || ""),
+    }
+    const parsed = schema.safeParse(data, {errorMap})
+    if (!parsed.success) {
+      const fieldErrors: {email?: string; password?: string} = {}
+      for (const issue of parsed.error.issues) {
+        if (issue.path[0] === "email") fieldErrors.email = issue.message
+        if (issue.path[0] === "password") fieldErrors.password = issue.message
+      }
+      setErrors(fieldErrors)
+      return
+    }
+    setErrors({})
+    // submit
+  }
   return (
     <div className={cn("flex flex-col gap-6", className)} {...props}>
       <Card>
         <CardHeader className="text-center">
-          <CardTitle className="text-xl">Welcome back</CardTitle>
+          <CardTitle className="text-xl">{t("welcome")}</CardTitle>
           <CardDescription>
-            Login with your Apple or Google account
+            {t("social")}
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <form>
+          <form onSubmit={onSubmit}>
             <FieldGroup>
               <Field>
                 <Button variant="outline" type="button">
@@ -41,7 +76,7 @@ export function LoginForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Login with Apple
+                  {t("withApple")}
                 </Button>
                 <Button variant="outline" type="button">
                   <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24">
@@ -50,39 +85,46 @@ export function LoginForm({
                       fill="currentColor"
                     />
                   </svg>
-                  Login with Google
+                  {t("withGoogle")}
                 </Button>
               </Field>
               <FieldSeparator className="*:data-[slot=field-separator-content]:bg-card">
-                Or continue with
+                {tc("orContinueWith")}
               </FieldSeparator>
               <Field>
-                <FieldLabel htmlFor="email">Email</FieldLabel>
+                <FieldLabel htmlFor="email">{tc("email")}</FieldLabel>
                 <Input
                   id="email"
+                  name="email"
                   type="email"
                   placeholder="m@example.com"
                   required
                 />
+                {errors.email ? (
+                  <FieldDescription className="text-destructive">{errors.email}</FieldDescription>
+                ) : null}
               </Field>
               <Field>
                 <div className="flex items-center">
-                  <FieldLabel htmlFor="password">Password</FieldLabel>
+                  <FieldLabel htmlFor="password">{tc("password")}</FieldLabel>
                   <a
                     href="#"
                     className="ml-auto text-sm underline-offset-4 hover:underline"
                   >
-                    Forgot your password?
+                    {tc("forgot")}
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input id="password" name="password" type="password" required />
+                {errors.password ? (
+                  <FieldDescription className="text-destructive">{errors.password}</FieldDescription>
+                ) : null}
               </Field>
               <Field>
-                <Button type="submit">Login</Button>
+                <Button type="submit">{t("cta")}</Button>
                 <FieldDescription className="text-center">
-                  Don&apos;t have an account?{" "}
+                  {t("noAccount")} {" "}
                   <Link href="/signup" className="underline-offset-4 hover:underline">
-                    Sign up
+                    {t("signUp")}
                   </Link>
                 </FieldDescription>
               </Field>
@@ -91,8 +133,8 @@ export function LoginForm({
         </CardContent>
       </Card>
       <FieldDescription className="px-6 text-center">
-        By clicking continue, you agree to our <a href="#">Terms of Service</a>{" "}
-        and <a href="#">Privacy Policy</a>.
+        {t("agree")} <a href="#">{tc("terms")}</a>{" "}
+        {" "}e <a href="#">{tc("privacy")}</a>.
       </FieldDescription>
     </div>
   )

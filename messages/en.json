@@ -1,0 +1,54 @@
+{
+  "common": {
+    "brand": "Brand",
+    "deployNow": "Deploy now",
+    "learn": "Learn",
+    "examples": "Examples",
+    "goToNext": "Go to nextjs.org →",
+    "orContinueWith": "Or continue with",
+    "and": "and",
+    "email": "Email",
+    "password": "Password",
+    "forgot": "Forgot your password?",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy"
+  },
+  "home": {
+    "getStarted": "Get started by editing",
+    "saveAndSee": "Save and see your changes instantly.",
+    "login": "Login"
+  },
+  "login": {
+    "welcome": "Welcome back",
+    "social": "Login with your Apple or Google account",
+    "withApple": "Login with Apple",
+    "withGoogle": "Login with Google",
+    "cta": "Login",
+    "noAccount": "Don't have an account?",
+    "signUp": "Sign up",
+    "agree": "By clicking continue, you agree to our"
+  },
+  "signup": {
+    "title": "Create your account",
+    "desc": "Enter your email below to create your account",
+    "fullName": "Full Name",
+    "confirmPassword": "Confirm Password",
+    "minLength": "Must be at least 8 characters long.",
+    "cta": "Create Account",
+    "haveAccount": "Already have an account?",
+    "signIn": "Sign in",
+    "agree": "By clicking continue, you agree to our"
+  },
+  "zod": {
+    "email_invalid": "Please enter a valid email address.",
+    "required": "This field is required.",
+    "password_min": "Password must be at least {min} characters.",
+    "passwords_mismatch": "Passwords must match."
+  },
+  "seo": {
+    "title": "Brand",
+    "description": "Your brand application"
+  }
+}
+
+

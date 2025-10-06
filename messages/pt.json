@@ -1,0 +1,54 @@
+{
+  "common": {
+    "brand": "Brand",
+    "deployNow": "Fazer deploy agora",
+    "learn": "Aprender",
+    "examples": "Exemplos",
+    "goToNext": "Ir para nextjs.org →",
+    "orContinueWith": "Ou continue com",
+    "and": "e",
+    "email": "Email",
+    "password": "Senha",
+    "forgot": "Esqueceu sua senha?",
+    "terms": "Termos de Serviço",
+    "privacy": "Política de Privacidade"
+  },
+  "home": {
+    "getStarted": "Comece editando",
+    "saveAndSee": "Salve e veja suas mudanças instantaneamente.",
+    "login": "Entrar"
+  },
+  "login": {
+    "welcome": "Bem-vindo de volta",
+    "social": "Entre com sua conta Apple ou Google",
+    "withApple": "Entrar com Apple",
+    "withGoogle": "Entrar com Google",
+    "cta": "Entrar",
+    "noAccount": "Não tem uma conta?",
+    "signUp": "Cadastre-se",
+    "agree": "Ao continuar, você concorda com nossos"
+  },
+  "signup": {
+    "title": "Crie sua conta",
+    "desc": "Digite seu email abaixo para criar sua conta",
+    "fullName": "Nome completo",
+    "confirmPassword": "Confirmar senha",
+    "minLength": "Deve ter pelo menos 8 caracteres.",
+    "cta": "Criar conta",
+    "haveAccount": "Já possui uma conta?",
+    "signIn": "Entrar",
+    "agree": "Ao continuar, você concorda com nossos"
+  },
+  "zod": {
+    "email_invalid": "Digite um email válido.",
+    "required": "Este campo é obrigatório.",
+    "password_min": "A senha deve ter pelo menos {min} caracteres.",
+    "passwords_mismatch": "As senhas devem coincidir."
+  },
+  "seo": {
+    "title": "Brand",
+    "description": "Sua aplicação de marca"
+  }
+}
+
+
