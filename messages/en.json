@@ -20,7 +20,7 @@
   },
   "login": {
     "welcome": "Welcome back",
-    "social": "Login with your Apple or Google account",
+    "social": "Login with your Google account",
     "withApple": "Login with Apple",
     "withGoogle": "Login with Google",
     "cta": "Login",
@@ -30,8 +30,9 @@
   },
   "signup": {
     "title": "Create your account",
-    "desc": "Enter your email below to create your account",
+    "desc": "Sign up with your Google account or enter your email",
     "fullName": "Full Name",
+    "withGoogle": "Sign up with Google",
     "confirmPassword": "Confirm Password",
     "minLength": "Must be at least 8 characters long.",
     "cta": "Create Account",

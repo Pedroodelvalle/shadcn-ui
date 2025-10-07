@@ -20,7 +20,7 @@
   },
   "login": {
     "welcome": "Bem-vindo de volta",
-    "social": "Entre com sua conta Apple ou Google",
+    "social": "Entre com sua conta Google",
     "withApple": "Entrar com Apple",
     "withGoogle": "Entrar com Google",
     "cta": "Entrar",
@@ -30,8 +30,9 @@
   },
   "signup": {
     "title": "Crie sua conta",
-    "desc": "Digite seu email abaixo para criar sua conta",
+    "desc": "Cadastre-se com sua conta Google ou digite seu email",
     "fullName": "Nome completo",
+    "withGoogle": "Cadastrar com Google",
     "confirmPassword": "Confirmar senha",
     "minLength": "Deve ter pelo menos 8 caracteres.",
     "cta": "Criar conta",
