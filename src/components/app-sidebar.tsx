@@ -40,19 +40,19 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         icon: Home01Icon,
       },
       {
-        title: t("accounts"),
-        url: "/accounts",
-        icon: UserAccountIcon,
-      },
-      {
         title: t("campaigns"),
-        url: "#",
+        url: "/campaigns",
         icon: Target02Icon,
       },
       {
         title: t("videos"),
-        url: "#",
+        url: "/videos",
         icon: Video01Icon,
+      },
+      {
+        title: t("accounts"),
+        url: "/accounts",
+        icon: UserAccountIcon,
       },
     ],
   }

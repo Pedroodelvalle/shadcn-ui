@@ -29,9 +29,13 @@ export function NavMain({
         <SidebarMenu>
           {items.map((item) => {
             const isActive =
-              (item.title === "Dashboard" && pathname?.includes("/dashboard")) ||
+              pathname?.includes(item.url) ||
               (item.title === "Accounts" && pathname?.includes("/accounts")) ||
-              (item.title === "Contas" && pathname?.includes("/accounts"))
+              (item.title === "Contas" && pathname?.includes("/accounts")) ||
+              (item.title === "Campaigns" && pathname?.includes("/campaigns")) ||
+              (item.title === "Campanhas" && pathname?.includes("/campaigns")) ||
+              (item.title === "Videos" && pathname?.includes("/videos")) ||
+              (item.title === "Vídeos" && pathname?.includes("/videos"))
 
             return (
               <SidebarMenuItem key={item.title}>
