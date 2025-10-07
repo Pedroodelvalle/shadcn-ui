@@ -1,6 +1,8 @@
 "use client"
 
 import * as React from "react"
+import { useTranslations } from "next-intl"
+import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import {
   Home01Icon,
@@ -22,37 +24,39 @@ import {
   SidebarMenuItem,
 } from "@/components/ui/sidebar"
 
-const data = {
-  user: {
-    name: "shadcn",
-    email: "m@example.com",
-    avatar: "/avatars/shadcn.jpg",
-  },
-  navMain: [
-    {
-      title: "Dashboard",
-      url: "#",
-      icon: Home01Icon,
-    },
-    {
-      title: "Contas",
-      url: "#",
-      icon: UserAccountIcon,
-    },
-    {
-      title: "Campanhas",
-      url: "#",
-      icon: Target02Icon,
-    },
-    {
-      title: "Vídeos",
-      url: "#",
-      icon: Video01Icon,
-    },
-  ],
-}
-
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+  const t = useTranslations("sidebar")
+
+  const data = {
+    user: {
+      name: "shadcn",
+      email: "m@example.com",
+      avatar: "/avatars/shadcn.jpg",
+    },
+    navMain: [
+      {
+        title: t("dashboard"),
+        url: "/dashboard",
+        icon: Home01Icon,
+      },
+      {
+        title: t("accounts"),
+        url: "/accounts",
+        icon: UserAccountIcon,
+      },
+      {
+        title: t("campaigns"),
+        url: "#",
+        icon: Target02Icon,
+      },
+      {
+        title: t("videos"),
+        url: "#",
+        icon: Video01Icon,
+      },
+    ],
+  }
+
   return (
     <Sidebar collapsible="offcanvas" {...props}>
       <SidebarHeader>
