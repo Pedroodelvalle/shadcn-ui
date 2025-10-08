@@ -1,77 +1,64 @@
 import { useTranslations } from "next-intl"
-import { IconTrendingDown, IconTrendingUp } from "@tabler/icons-react"
 
-import { Badge } from "@/components/ui/badge"
-import {
-  Card,
-  CardAction,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 
 export function SectionCards() {
   const t = useTranslations("dashboard")
 
+  const data = [
+    {
+      name: t("publishedVideos"),
+      stat: "30",
+      change: "+5",
+      changeType: "positive",
+    },
+    {
+      name: t("totalViews"),
+      stat: "31k",
+      change: "+15%",
+      changeType: "positive",
+    },
+    {
+      name: t("totalComments"),
+      stat: "20",
+      change: "+8",
+      changeType: "positive",
+    },
+    {
+      name: t("totalLikes"),
+      stat: "400",
+      change: "+25",
+      changeType: "positive",
+    },
+  ]
+
   return (
-    <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 lg:grid-cols-4">
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>{t("publishedVideos")}</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            30
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +5
-            </Badge>
-          </CardAction>
-        </CardHeader>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>{t("totalViews")}</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            31k
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +15%
-            </Badge>
-          </CardAction>
-        </CardHeader>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>{t("totalComments")}</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            20
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +8
-            </Badge>
-          </CardAction>
-        </CardHeader>
-      </Card>
-      <Card className="@container/card">
-        <CardHeader>
-          <CardDescription>{t("totalLikes")}</CardDescription>
-          <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-            400
-          </CardTitle>
-          <CardAction>
-            <Badge variant="outline">
-              <IconTrendingUp />
-              +25
-            </Badge>
-          </CardAction>
-        </CardHeader>
-      </Card>
+    <div className="grid grid-cols-1 gap-6 px-4 lg:px-6 lg:grid-cols-4">
+      {data.map((item) => (
+        <Card key={item.name} className="p-6 py-4">
+          <CardContent className="p-0">
+            <dt className="text-sm font-medium text-muted-foreground">
+              {item.name}
+            </dt>
+            <dd className="mt-2 flex items-baseline space-x-2.5">
+              <span className="text-3xl font-semibold text-foreground">
+                {item.stat}
+              </span>
+              <span
+                className={cn(
+                  item.changeType === "positive"
+                    ? "text-green-800 dark:text-green-400"
+                    : "text-red-800 dark:text-red-400",
+                  "text-sm font-medium"
+                )}
+              >
+                {item.change}
+              </span>
+            </dd>
+          </CardContent>
+        </Card>
+      ))}
     </div>
   )
 }

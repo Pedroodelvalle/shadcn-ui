@@ -58,6 +58,17 @@ import { useIsMobile } from "@/hooks/use-mobile"
 import { Badge } from "@/components/ui/badge"
 import { Button } from "@/components/ui/button"
 import {
+  MorphingDialog,
+  MorphingDialogTrigger,
+  MorphingDialogContent,
+  MorphingDialogTitle,
+  MorphingDialogImage,
+  MorphingDialogSubtitle,
+  MorphingDialogClose,
+  MorphingDialogDescription,
+  MorphingDialogContainer,
+} from "../../components/motion-primitives/morphing-dialog"
+import {
   ChartConfig,
   ChartContainer,
   ChartTooltip,
@@ -525,19 +536,73 @@ function VideoTable({ data, t }: { data: z.infer<typeof videoSchema>[], t: any }
       accessorKey: "title",
       header: t("video"),
       cell: ({ row }) => (
-        <div className="flex items-center gap-3">
-          <img
-            src={row.original.thumbnail}
-            alt={row.original.title}
-            className="h-12 w-20 rounded object-cover"
-          />
-          <div>
-            <div className="font-medium">{row.original.title}</div>
-            <div className="text-sm text-muted-foreground">
-              {row.original.platform} • {row.original.duration}
+        <MorphingDialog
+          transition={{
+            type: "spring",
+            bounce: 0.05,
+            duration: 0.25,
+          }}
+        >
+          <MorphingDialogTrigger className="w-full">
+            <div className="flex items-center gap-3">
+              <img
+                src={row.original.thumbnail}
+                alt={row.original.title}
+                className="h-12 w-20 rounded object-cover"
+              />
+              <div>
+                <div className="font-medium">{row.original.title}</div>
+                <div className="text-sm text-muted-foreground">
+                  {row.original.platform} • {row.original.duration}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
+          </MorphingDialogTrigger>
+          <MorphingDialogContainer>
+            <MorphingDialogContent
+              style={{ borderRadius: "24px" }}
+              className="pointer-events-auto relative flex h-auto w-full flex-col overflow-hidden border border-zinc-950/10 bg-white dark:border-zinc-50/10 dark:bg-zinc-900 sm:w-[560px]"
+            >
+              <MorphingDialogImage
+                src={row.original.thumbnail}
+                alt={row.original.title}
+                className="h-64 w-full object-cover"
+              />
+              <div className="p-6">
+                <MorphingDialogTitle className="text-2xl text-zinc-950 dark:text-zinc-50">
+                  {row.original.title}
+                </MorphingDialogTitle>
+                <MorphingDialogSubtitle className="text-zinc-700 dark:text-zinc-400">
+                  {row.original.platform} • {row.original.duration}
+                </MorphingDialogSubtitle>
+                <MorphingDialogDescription
+                  disableLayoutAnimation
+                  variants={{
+                    initial: { opacity: 0, scale: 0.98, y: 12 },
+                    animate: { opacity: 1, scale: 1, y: 0 },
+                    exit: { opacity: 0, scale: 0.98, y: 12 },
+                  }}
+                >
+                  <div className="mt-4 grid grid-cols-3 gap-3 text-center">
+                    <div>
+                      <div className="text-sm text-muted-foreground">Views</div>
+                      <div className="font-medium">{row.original.views}</div>
+                    </div>
+                    <div>
+                      <div className="text-sm text-muted-foreground">Likes</div>
+                      <div className="font-medium">{row.original.likes}</div>
+                    </div>
+                    <div>
+                      <div className="text-sm text-muted-foreground">Comments</div>
+                      <div className="font-medium">{row.original.comments}</div>
+                    </div>
+                  </div>
+                </MorphingDialogDescription>
+              </div>
+              <MorphingDialogClose className="text-zinc-50" />
+            </MorphingDialogContent>
+          </MorphingDialogContainer>
+        </MorphingDialog>
       ),
       enableHiding: false,
     },

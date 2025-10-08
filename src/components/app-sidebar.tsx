@@ -9,8 +9,10 @@ import {
   UserAccountIcon,
   Target02Icon,
   Video01Icon,
+  ArtificialIntelligence01Icon,
 } from "hugeicons-react"
 
+import { CampaignBudget } from "@/components/stats-08"
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
 import { ModeToggle } from "@/components/mode-toggle"
@@ -54,6 +56,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         url: "/accounts",
         icon: UserAccountIcon,
       },
+      {
+        title: t("aiAssistant"),
+        url: "/assistente-ia",
+        icon: ArtificialIntelligence01Icon,
+      },
     ],
   }
 
@@ -83,9 +90,12 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>
-        <div className="px-3 py-2">
-          <ModeToggle />
+        <div className="px-0 py-2">
+          <CampaignBudget />
         </div>
+        {/* <div className="px-3 py-2">
+          <ModeToggle />
+        </div> */}
         <NavUser user={data.user} />
       </SidebarFooter>
     </Sidebar>

@@ -14,7 +14,8 @@ import {
   SidebarProvider,
 } from "@/components/ui/sidebar"
 import { Button } from "@/components/ui/button"
-import { Card, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent } from "@/components/ui/card"
+import { cn } from "@/lib/utils"
 import {
   Select,
   SelectContent,
@@ -138,11 +139,11 @@ export default function CampaignsPage() {
               ) : (
                 <>
                   {/* KPIs for current selection */}
-                  <div className="*:data-[slot=card]:from-primary/5 *:data-[slot=card]:to-card dark:*:data-[slot=card]:bg-card grid grid-cols-1 gap-4 px-4 *:data-[slot=card]:bg-gradient-to-t *:data-[slot=card]:shadow-xs lg:px-6 lg:grid-cols-4">
-                    <KpiCard label={t("kpis.videos")} value={kpis.videos.toLocaleString()} />
-                    <KpiCard label={t("kpis.views")} value={Math.round(kpis.views).toLocaleString()} />
-                    <KpiCard label={t("kpis.likes")} value={Math.round(kpis.likes).toLocaleString()} />
-                    <KpiCard label={t("kpis.comments")} value={Math.round(kpis.comments).toLocaleString()} />
+                  <div className="grid grid-cols-1 gap-6 px-4 lg:px-6 lg:grid-cols-4">
+                    <KpiCard label={t("kpis.videos")} value={kpis.videos.toLocaleString()} change="+2" />
+                    <KpiCard label={t("kpis.views")} value={Math.round(kpis.views).toLocaleString()} change="+15%" />
+                    <KpiCard label={t("kpis.likes")} value={Math.round(kpis.likes).toLocaleString()} change="+12%" />
+                    <KpiCard label={t("kpis.comments")} value={Math.round(kpis.comments).toLocaleString()} change="+8%" />
                   </div>
                   <DataTable data={[]} videoData={filteredVideos as any} />
                 </>
@@ -155,15 +156,34 @@ export default function CampaignsPage() {
   )
 }
 
-function KpiCard({ label, value }: { label: string; value: string }) {
+function KpiCard({ label, value, change = "+0", changeType = "positive" }: {
+  label: string;
+  value: string;
+  change?: string;
+  changeType?: "positive" | "negative"
+}) {
   return (
-    <Card className="@container/card">
-      <CardHeader>
-        <div className="text-muted-foreground text-sm">{label}</div>
-        <CardTitle className="text-2xl font-semibold tabular-nums @[250px]/card:text-3xl">
-          {value}
-        </CardTitle>
-      </CardHeader>
+    <Card className="p-6 py-4">
+      <CardContent className="p-0">
+        <dt className="text-sm font-medium text-muted-foreground">
+          {label}
+        </dt>
+        <dd className="mt-2 flex items-baseline space-x-2.5">
+          <span className="text-3xl font-semibold text-foreground">
+            {value}
+          </span>
+          <span
+            className={cn(
+              changeType === "positive"
+                ? "text-green-800 dark:text-green-400"
+                : "text-red-800 dark:text-red-400",
+              "text-sm font-medium"
+            )}
+          >
+            {change}
+          </span>
+        </dd>
+      </CardContent>
     </Card>
   )
 }
