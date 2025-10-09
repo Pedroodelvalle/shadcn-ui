@@ -6,7 +6,6 @@ import {
   IconCreditCard,
   IconDotsVertical,
   IconLogout,
-  IconNotification,
   IconUserCircle,
 } from "@tabler/icons-react"
 
@@ -98,10 +97,6 @@ export function NavUser({
                   <IconCreditCard />
                   {t("billing")}
                 </Link>
-              </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconNotification />
-                {t("notifications")}
               </DropdownMenuItem>
             </DropdownMenuGroup>
             <DropdownMenuSeparator />
