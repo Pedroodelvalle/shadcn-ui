@@ -93,9 +93,11 @@ export function NavUser({
                   {t("account")}
                 </Link>
               </DropdownMenuItem>
-              <DropdownMenuItem>
-                <IconCreditCard />
-                {t("billing")}
+              <DropdownMenuItem asChild>
+                <Link href="/billing">
+                  <IconCreditCard />
+                  {t("billing")}
+                </Link>
               </DropdownMenuItem>
               <DropdownMenuItem>
                 <IconNotification />

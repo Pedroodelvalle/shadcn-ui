@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { IconCamera, IconUser, IconMail, IconSettings } from "@tabler/icons-react"
 
@@ -17,6 +17,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Separator } from "@/components/ui/separator"
 import { Badge } from "@/components/ui/badge"
+import { Skeleton } from "@/components/ui/skeleton"
 import { toast } from "sonner"
 
 // Mock user data - in a real app this would come from your auth/user state
@@ -42,6 +43,7 @@ export default function AccountPage() {
   const t = useTranslations("account")
   const tGlobal = useTranslations()
   const [isEditing, setIsEditing] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [formData, setFormData] = useState({
     name: mockUser.name,
     email: mockUser.email,
@@ -50,6 +52,19 @@ export default function AccountPage() {
     location: mockUser.location,
     website: mockUser.website
   })
+
+  // Show skeleton immediately, then content after loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1700) // Show content after 1.7 seconds
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (isLoading) {
+    return <AccountPageSkeleton />
+  }
 
   const handleInputChange = (field: string, value: string) => {
     setFormData(prev => ({ ...prev, [field]: value }))
@@ -310,6 +325,117 @@ export default function AccountPage() {
                         <div>
                           <p className="font-medium">{t("lastLogin")}</p>
                           <p className="text-sm text-muted-foreground">{t("today")}</p>
+                        </div>
+                      </div>
+                    </CardContent>
+                  </Card>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
+
+function AccountPageSkeleton() {
+  return (
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader title="Conta" />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <div className="px-4 lg:px-6">
+                <div className="flex flex-col gap-6">
+                  {/* Profile Header Skeleton */}
+                  <div className="flex flex-col gap-6 md:flex-row md:items-start">
+                    <div className="flex flex-col items-center gap-4 md:items-start">
+                      <Skeleton className="h-24 w-24 rounded-full" />
+                      <div className="text-center md:text-left space-y-2">
+                        <Skeleton className="h-8 w-48" />
+                        <Skeleton className="h-4 w-32" />
+                      </div>
+                    </div>
+
+                    {/* Quick Stats Skeleton */}
+                    <div className="flex-1">
+                      <div className="grid grid-cols-2 gap-4 md:grid-cols-4">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                          <Card key={i}>
+                            <CardContent className="p-4">
+                              <Skeleton className="h-8 w-12 mb-1" />
+                              <Skeleton className="h-3 w-16" />
+                            </CardContent>
+                          </Card>
+                        ))}
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Profile Information Card Skeleton */}
+                  <Card>
+                    <CardHeader>
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-2">
+                          <Skeleton className="h-6 w-48" />
+                          <Skeleton className="h-4 w-96" />
+                        </div>
+                        <Skeleton className="h-9 w-24" />
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-6">
+                      <div className="grid gap-4 md:grid-cols-2">
+                        {Array.from({ length: 4 }).map((_, i) => (
+                          <div key={i} className="space-y-2">
+                            <Skeleton className="h-4 w-20" />
+                            <Skeleton className="h-10 w-full" />
+                          </div>
+                        ))}
+                      </div>
+                      <div className="space-y-2">
+                        <Skeleton className="h-4 w-16" />
+                        <Skeleton className="h-20 w-full" />
+                      </div>
+                    </CardContent>
+                  </Card>
+
+                  {/* Account Information Card Skeleton */}
+                  <Card>
+                    <CardHeader>
+                      <div className="space-y-2">
+                        <Skeleton className="h-6 w-40" />
+                        <Skeleton className="h-4 w-80" />
+                      </div>
+                    </CardHeader>
+                    <CardContent className="space-y-4">
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-24" />
+                          <Skeleton className="h-3 w-20" />
+                        </div>
+                        <Skeleton className="h-6 w-16" />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-28" />
+                          <Skeleton className="h-3 w-32" />
+                        </div>
+                        <Skeleton className="h-6 w-20" />
+                      </div>
+                      <div className="flex items-center justify-between">
+                        <div className="space-y-2">
+                          <Skeleton className="h-4 w-20" />
+                          <Skeleton className="h-3 w-16" />
                         </div>
                       </div>
                     </CardContent>
