@@ -74,11 +74,12 @@
     "totalLikes": "Likes"
   },
   "sidebar": {
+    "newCampaign": "New Campaign",
     "dashboard": "Dashboard",
     "accounts": "Accounts",
     "campaigns": "Campaigns",
     "videos": "Videos",
-    "aiAssistant": "AI Assistant",
+    "aiAssistant": "AI Intelligence",
     "account": "Account",
     "billing": "Billing",
     "notifications": "Notifications",

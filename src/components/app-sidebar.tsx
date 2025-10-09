@@ -1,21 +1,22 @@
 "use client"
 
-import * as React from "react"
 import { useTranslations } from "next-intl"
 import { Link } from "@/i18n/routing"
 import Image from "next/image"
 import {
-  Home01Icon,
-  UserAccountIcon,
-  Target02Icon,
-  Video01Icon,
-  ArtificialIntelligence01Icon,
+  DashboardSquare01Icon,
+  UserMultipleIcon,
+  StrategyIcon,
+  PlayIcon,
+  AiBrain01Icon,
+  PlusSignIcon,
 } from "hugeicons-react"
 
 import { CampaignBudget } from "@/components/stats-08"
 import { NavMain } from "@/components/nav-main"
 import { NavUser } from "@/components/nav-user"
 import { ModeToggle } from "@/components/mode-toggle"
+import { Separator } from "@/components/ui/separator"
 import {
   Sidebar,
   SidebarContent,
@@ -24,6 +25,8 @@ import {
   SidebarMenu,
   SidebarMenuButton,
   SidebarMenuItem,
+  SidebarGroup,
+  SidebarGroupContent,
 } from "@/components/ui/sidebar"
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
@@ -39,27 +42,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
       {
         title: t("dashboard"),
         url: "/dashboard",
-        icon: Home01Icon,
+        icon: DashboardSquare01Icon,
       },
       {
         title: t("campaigns"),
         url: "/campaigns",
-        icon: Target02Icon,
+        icon: StrategyIcon,
       },
       {
         title: t("videos"),
         url: "/videos",
-        icon: Video01Icon,
+        icon: PlayIcon,
       },
       {
         title: t("accounts"),
         url: "/accounts",
-        icon: UserAccountIcon,
+        icon: UserMultipleIcon,
       },
       {
         title: t("aiAssistant"),
         url: "/assistente-ia",
-        icon: ArtificialIntelligence01Icon,
+        icon: AiBrain01Icon,
       },
     ],
   }
@@ -86,7 +89,27 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarHeader>
-      <SidebarContent>
+      <div className="px-4 py-2">
+        <Separator className="bg-border/50" />
+      </div>
+      <SidebarContent className="gap-1">
+        <SidebarGroup>
+          <SidebarGroupContent className="flex flex-col gap-1">
+            <SidebarMenu>
+              <SidebarMenuItem>
+                <Link href="/campaigns" prefetch>
+                  <SidebarMenuButton
+                    tooltip={t("newCampaign")}
+                    className="h-10 bg-muted/50 text-foreground hover:bg-muted border border-border cursor-pointer"
+                  >
+                    <PlusSignIcon className="size-5" />
+                    <span className="text-base font-medium">{t("newCampaign")}</span>
+                  </SidebarMenuButton>
+                </Link>
+              </SidebarMenuItem>
+            </SidebarMenu>
+          </SidebarGroupContent>
+        </SidebarGroup>
         <NavMain items={data.navMain} />
       </SidebarContent>
       <SidebarFooter>

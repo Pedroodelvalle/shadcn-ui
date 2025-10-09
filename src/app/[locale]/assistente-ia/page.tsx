@@ -11,6 +11,7 @@ import { SiteHeader } from "@/components/site-header"
 import { SidebarInset, SidebarProvider } from "@/components/ui/sidebar"
 import { useState, useEffect, useRef } from "react"
 import { cn } from "@/lib/utils"
+import { Card, CardContent } from "@/components/ui/card"
 
 type MessageType = {
   id: string;
@@ -24,6 +25,7 @@ export default function Page() {
   const [messages, setMessages] = useState<MessageType[]>([]);
   const [isLoading, setIsLoading] = useState(false);
   const [streamingMessageId, setStreamingMessageId] = useState<string | null>(null);
+  const [isPageLoading, setIsPageLoading] = useState(true);
   const streamingIntervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const startStreaming = (messageId: string, fullText: string) => {
@@ -58,6 +60,28 @@ export default function Page() {
     // Start streaming with a small delay
     streamingIntervalRef.current = setInterval(streamText, 30); // ~30ms per character
   };
+
+  // Show skeleton immediately, then content after loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPageLoading(false)
+    }, 1300) // Show content after 1.3 seconds
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Cleanup interval on unmount
+  useEffect(() => {
+    return () => {
+      if (streamingIntervalRef.current) {
+        clearInterval(streamingIntervalRef.current);
+      }
+    };
+  }, []);
+
+  if (isPageLoading) {
+    return <AssistenteIAPageSkeleton />
+  }
 
   const handleSendMessage = async (message: string) => {
     // Add user message
@@ -97,15 +121,6 @@ export default function Page() {
       startStreaming(assistantMessage.id, randomResponse);
     }, 800);
   };
-
-  // Cleanup interval on unmount
-  useEffect(() => {
-    return () => {
-      if (streamingIntervalRef.current) {
-        clearInterval(streamingIntervalRef.current);
-      }
-    };
-  }, []);
 
   return (
     <SidebarProvider
@@ -193,6 +208,65 @@ export default function Page() {
                 <ConversationEmptyState />
               </Conversation>
             )}
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
+
+function AssistenteIAPageSkeleton() {
+  return (
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader title="Assistente IA" />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-1 justify-end pt-52 pb-8">
+              <div className="px-4 lg:px-6 w-full">
+                <Card>
+                  <CardContent className="p-6">
+                    <div className="space-y-4">
+                      {/* Header skeleton */}
+                      <div className="flex items-center gap-3">
+                        <Skeleton className="h-12 w-12 rounded-full" />
+                        <div className="space-y-2">
+                          <Skeleton className="h-6 w-48" />
+                          <Skeleton className="h-4 w-64" />
+                        </div>
+                      </div>
+
+                      {/* Input area skeleton */}
+                      <div className="space-y-3">
+                        <Skeleton className="h-20 w-full rounded-lg" />
+                        <div className="flex justify-between items-center">
+                          <Skeleton className="h-4 w-32" />
+                          <Skeleton className="h-9 w-24" />
+                        </div>
+                      </div>
+
+                      {/* Suggestions skeleton */}
+                      <div className="space-y-3">
+                        <Skeleton className="h-4 w-24" />
+                        <div className="grid grid-cols-1 md:grid-cols-2 gap-3">
+                          {Array.from({ length: 4 }).map((_, i) => (
+                            <Skeleton key={i} className="h-12 w-full rounded-lg" />
+                          ))}
+                        </div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </div>
+            </div>
           </div>
         </div>
       </SidebarInset>

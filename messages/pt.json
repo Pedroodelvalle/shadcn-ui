@@ -74,11 +74,12 @@
     "totalLikes": "Curtidas"
   },
   "sidebar": {
+    "newCampaign": "Nova Campanha",
     "dashboard": "Dashboard",
     "accounts": "Contas",
     "campaigns": "Campanhas",
     "videos": "Vídeos",
-    "aiAssistant": "Assistente IA",
+    "aiAssistant": "Inteligência IA",
     "account": "Conta",
     "billing": "Cobrança",
     "notifications": "Notificações",

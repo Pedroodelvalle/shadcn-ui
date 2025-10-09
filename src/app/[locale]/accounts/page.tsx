@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useState, useEffect } from "react"
 import { useTranslations } from "next-intl"
 import { IconBrandInstagram } from "@tabler/icons-react"
 import { ArrowUpRightIcon, CheckCircleIcon, PlusIcon } from "lucide-react"
@@ -16,6 +16,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
 import { Badge } from "@/components/ui/badge"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { Skeleton } from "@/components/ui/skeleton"
 import {
   SheetClose,
   SheetFooter,
@@ -51,6 +52,20 @@ export default function AccountsPage() {
   const t = useTranslations("accounts")
   const tGlobal = useTranslations()
   const [isSheetOpen, setIsSheetOpen] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
+
+  // Show skeleton immediately, then content after loading
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsLoading(false)
+    }, 1600) // Show content after 1.6 seconds
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  if (isLoading) {
+    return <AccountsPageSkeleton />
+  }
 
   // For demo purposes, we'll show connected state. In a real app, this would be based on actual account connections
   const hasConnectedAccounts = instagramAccount.connected
@@ -198,6 +213,62 @@ export default function AccountsPage() {
                           <Button size="sm" variant="outline">
                             {t("disconnect")}
                           </Button>
+                        </div>
+                      </CardContent>
+                    </Card>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </SidebarInset>
+    </SidebarProvider>
+  )
+}
+
+function AccountsPageSkeleton() {
+  return (
+    <SidebarProvider
+      style={
+        {
+          "--sidebar-width": "calc(var(--spacing) * 72)",
+          "--header-height": "calc(var(--spacing) * 12)",
+        } as React.CSSProperties
+      }
+    >
+      <AppSidebar variant="inset" />
+      <SidebarInset>
+        <SiteHeader title="Contas" />
+        <div className="flex flex-1 flex-col">
+          <div className="@container/main flex flex-1 flex-col gap-2">
+            <div className="flex flex-col gap-4 py-4 md:gap-6 md:py-6">
+              <div className="px-4 lg:px-6">
+                <div className="flex flex-col gap-6">
+                  {/* Header skeleton */}
+                  <div className="space-y-2">
+                    <Skeleton className="h-8 w-48" />
+                    <Skeleton className="h-4 w-96" />
+                  </div>
+
+                  {/* Account card skeleton */}
+                  <div className="max-w-md">
+                    <Card>
+                      <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+                        <Skeleton className="h-4 w-20" />
+                        <Skeleton className="h-6 w-24" />
+                      </CardHeader>
+                      <CardContent>
+                        <div className="flex items-center gap-3">
+                          <Skeleton className="h-10 w-10 rounded-lg" />
+                          <div className="space-y-2">
+                            <Skeleton className="h-4 w-32" />
+                            <Skeleton className="h-3 w-28" />
+                          </div>
+                        </div>
+                        <div className="mt-6 flex gap-2">
+                          <Skeleton className="h-8 w-20" />
+                          <Skeleton className="h-8 w-24" />
                         </div>
                       </CardContent>
                     </Card>

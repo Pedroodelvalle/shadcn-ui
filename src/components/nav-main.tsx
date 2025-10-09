@@ -25,7 +25,7 @@ export function NavMain({
 
   return (
     <SidebarGroup>
-      <SidebarGroupContent className="flex flex-col gap-4">
+      <SidebarGroupContent className="flex flex-col gap-1">
         <SidebarMenu>
           {items.map((item) => {
             const isActive =
@@ -40,10 +40,10 @@ export function NavMain({
             return (
               <SidebarMenuItem key={item.title}>
                 {item.url !== "#" ? (
-                  <Link href={item.url}>
+                  <Link href={item.url} prefetch>
                     <SidebarMenuButton
                       tooltip={item.title}
-                      className={`h-10 ${isActive ? "bg-muted/50" : ""}`}
+                      className={`h-10 cursor-pointer ${isActive ? "bg-muted/50" : ""}`}
                     >
                       {item.icon && <item.icon className="size-5" />}
                       <span className="text-base">{item.title}</span>
@@ -52,7 +52,7 @@ export function NavMain({
                 ) : (
                   <SidebarMenuButton
                     tooltip={item.title}
-                    className={`h-10 ${isActive ? "bg-muted/50" : ""}`}
+                    className={`h-10 cursor-pointer ${isActive ? "bg-muted/50" : ""}`}
                   >
                     {item.icon && <item.icon className="size-5" />}
                     <span className="text-base">{item.title}</span>
